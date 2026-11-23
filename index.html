@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bella to England</title>
+<meta name="description" content="Help Bella get to England">
+<meta property="og:title" content="Help Bella get to England 🇬🇧">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;800&family=Inter:wght@400;600;700&family=Noto+Sans+Arabic:wght@400;700&family=Noto+Sans+SC:wght@400;700&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<script src="https://js.stripe.com/dahlia/stripe.js"></script>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">🇬🇧 <span>Bella → London</span></div>
+  <div class="lang">
+    <button id="langBtn" class="lang-btn" aria-haspopup="true"></button>
+    <ul id="langMenu" class="lang-menu" hidden></ul>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="rain" aria-hidden="true"></div>
+  <div class="hero-inner">
+    <p class="kicker" data-i18n="kicker"></p>
+    <h1 data-i18n="title"></h1>
+    <p class="subtitle" data-i18n="subtitle"></p>
+    <button class="btn btn-red btn-lg" data-open-donate data-i18n="donate"></button>
+  </div>
+  <svg class="skyline" viewBox="0 0 1200 220" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+    <g fill="currentColor">
+      <!-- Big Ben -->
+      <rect x="150" y="60" width="50" height="160"/><polygon points="150,60 175,10 200,60"/>
+      <rect x="140" y="95" width="70" height="10"/>
+      <circle cx="175" cy="85" r="14" fill="var(--gold)"/>
+      <!-- Parliament -->
+      <rect x="200" y="140" width="260" height="80"/>
+      <g><rect x="220" y="120" width="12" height="20"/><rect x="260" y="120" width="12" height="20"/><rect x="300" y="120" width="12" height="20"/><rect x="340" y="120" width="12" height="20"/><rect x="380" y="120" width="12" height="20"/><rect x="420" y="110" width="20" height="30"/></g>
+      <!-- London Eye -->
+      <circle cx="620" cy="110" r="90" fill="none" stroke="currentColor" stroke-width="5"/>
+      <circle cx="620" cy="110" r="6"/>
+      <g stroke="currentColor" stroke-width="2"><line x1="620" y1="20" x2="620" y2="200"/><line x1="530" y1="110" x2="710" y2="110"/><line x1="556" y1="46" x2="684" y2="174"/><line x1="684" y1="46" x2="556" y2="174"/></g>
+      <polygon points="600,220 620,110 640,220"/>
+      <!-- Tower Bridge -->
+      <rect x="820" y="70" width="40" height="150"/><polygon points="815,70 840,30 865,70"/>
+      <rect x="1000" y="70" width="40" height="150"/><polygon points="995,70 1020,30 1045,70"/>
+      <rect x="860" y="90" width="140" height="10"/>
+      <path d="M760 220 Q 840 150 860 160 L1000 160 Q 1020 150 1100 220 Z"/>
+      <rect x="0" y="200" width="1200" height="20"/>
+    </g>
+  </svg>
+  <div class="bus" aria-hidden="true">
+    <svg viewBox="0 0 120 70"><rect x="2" y="2" width="116" height="56" rx="8" fill="#c8102e"/><g fill="#fdf6e3"><rect x="10" y="9" width="16" height="13" rx="2"/><rect x="30" y="9" width="16" height="13" rx="2"/><rect x="50" y="9" width="16" height="13" rx="2"/><rect x="70" y="9" width="16" height="13" rx="2"/><rect x="90" y="9" width="20" height="13" rx="2"/><rect x="10" y="30" width="16" height="13" rx="2"/><rect x="30" y="30" width="16" height="13" rx="2"/><rect x="50" y="30" width="16" height="13" rx="2"/><rect x="70" y="30" width="16" height="13" rx="2"/></g><rect x="90" y="30" width="20" height="26" fill="#012169"/><circle cx="28" cy="60" r="8" fill="#222"/><circle cx="92" cy="60" r="8" fill="#222"/></svg>
+  </div>
+</section>
+
+<main>
+  <section class="card progress-card">
+    <div class="amounts">
+      <div><strong id="raised" class="big">US$ 0</strong> <span data-i18n="raised"></span></div>
+      <div class="muted"><span data-i18n="goal"></span>: <strong id="goal"></strong></div>
+    </div>
+    <div class="tube" role="progressbar" aria-valuemin="0" aria-valuemax="100" id="bar">
+      <div class="tube-line"><div class="tube-fill" id="fill"></div></div>
+      <span class="station" style="--p:25%"></span><span class="station" style="--p:50%"></span>
+      <span class="station" style="--p:75%"></span><span class="station end" style="--p:100%">🇬🇧</span>
+    </div>
+    <div class="stats">
+      <div><strong id="pct">0%</strong> <span data-i18n="reached"></span></div>
+      <div><strong id="count">0</strong> <span data-i18n="supporters"></span></div>
+    </div>
+    <button class="btn btn-red btn-block" data-open-donate data-i18n="donate"></button>
+  </section>
+
+  <section class="story card">
+    <div class="photo"><img src="img/bella.jpg" alt="Bella" onerror="this.parentNode.classList.add('nophoto');this.remove()"><span>B</span></div>
+    <div>
+      <h2 data-i18n="storyTitle"></h2>
+      <p data-i18n="storyText"></p>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="center" data-i18n="usesTitle"></h2>
+    <div class="uses">
+      <div class="use"><div class="ico">✈️</div><h3 data-i18n="use1"></h3><p data-i18n="use1d"></p></div>
+      <div class="use"><div class="ico">🏠</div><h3 data-i18n="use2"></h3><p data-i18n="use2d"></p></div>
+      <div class="use"><div class="ico">📚</div><h3 data-i18n="use3"></h3><p data-i18n="use3d"></p></div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2 data-i18n="wallTitle"></h2>
+    <ul id="wall" class="wall"></ul>
+  </section>
+
+  <section class="card">
+    <h2 data-i18n="faqTitle"></h2>
+    <details><summary data-i18n="q1"></summary><p data-i18n="a1"></p></details>
+    <details><summary data-i18n="q2"></summary><p data-i18n="a2"></p></details>
+    <details><summary data-i18n="q3"></summary><p data-i18n="a3"></p></details>
+  </section>
+
+  <section class="share center">
+    <h2 data-i18n="share"></h2>
+    <div class="share-row">
+      <a id="shareWa" class="btn btn-navy" target="_blank" rel="noopener">WhatsApp</a>
+      <a id="shareX" class="btn btn-navy" target="_blank" rel="noopener">X / Twitter</a>
+      <button id="copyLink" class="btn btn-ghost" data-i18n="copyLink"></button>
+    </div>
+  </section>
+</main>
+
+<footer><span data-i18n="footer"></span> · ☕ <span data-i18n="cheers"></span></footer>
+
+<!-- Modal de doação -->
+<div class="modal" id="modal" hidden>
+  <div class="modal-box" role="dialog" aria-modal="true">
+    <button class="close" id="closeModal" aria-label="Fechar">×</button>
+    <h2 data-i18n="modalTitle"></h2>
+    <div class="tabs">
+      <button class="tab active" data-tab="card" data-i18n="tabCard"></button>
+      <button class="tab" data-tab="paypal">PayPal</button>
+      <button class="tab" data-tab="pix" data-i18n="tabPix"></button>
+    </div>
+
+    <div class="pane" data-pane="card paypal">
+      <p class="label" data-i18n="chooseAmount"></p>
+      <div class="booths" id="booths"></div>
+      <input id="customAmount" class="input" type="number" min="1" placeholder="US$" hidden>
+      <button class="btn btn-red btn-block" id="payCard" data-i18n="continueCard"></button>
+      <button class="btn btn-paypal btn-block" id="payPaypal" data-i18n="continuePaypal" hidden></button>
+      <p class="note" id="cardNote" data-i18n="cardNote"></p>
+    </div>
+
+    <div class="pane" data-pane="stripe" hidden>
+      <button class="btn btn-ghost" id="backAmount">← $<span id="chosenAmount"></span></button>
+      <div id="checkout-form"></div>
+    </div>
+
+    <div class="pane" data-pane="pix" hidden>
+      <p data-i18n="pixText"></p>
+      <div id="qr" class="qr"></div>
+      <textarea id="pixCode" class="input" rows="3" readonly></textarea>
+      <button class="btn btn-navy btn-block" id="copyPix" data-i18n="pixCopy"></button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast" hidden></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script src="js/config.js"></script>
+<script src="js/i18n.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
