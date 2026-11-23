@@ -55,5 +55,5 @@ app.post("/api/create-checkout-session", async (req, res) => {
 });
 
 const port = process.env.PORT || 4242;
-app.listen(port, () => console.log(`Vaquinha rodando em http://localhost:${port}`));
+if (require.main === module) app.listen(port, () => console.log(`Vaquinha rodando em http://localhost:${port}`));
 module.exports = app;
