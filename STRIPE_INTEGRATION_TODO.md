@@ -22,7 +22,7 @@ These parameters were configured in Checkout Studio and are already set correctl
 
 **Files containing these parameters:**
 - [server.js](server.js)
-- [js/app.js](js/app.js) (appearance)
+- [js/app.js](public/js/app.js) (appearance)
 
 | Parameter | Value |
 |-----------|-------|
@@ -57,7 +57,7 @@ package.json              dependências e "npm start"
 .gitignore                ignora .env e node_modules
 STRIPE_INTEGRATION_TODO.md
 ```
-Arquivos alterados: [index.html](index.html), que carrega o Stripe.js Dahlia e ganhou o container `#checkout-form`, e [js/app.js](js/app.js), com o formulário embutido.
+Arquivos alterados: [index.html](public/index.html), que carrega o Stripe.js Dahlia e ganhou o container `#checkout-form`, e [js/app.js](public/js/app.js), com o formulário embutido.
 
 ## How it works
 
@@ -66,7 +66,7 @@ Arquivos alterados: [index.html](index.html), que carrega o Stripe.js Dahlia e g
 3. O servidor valida o valor (de US$ 1 a 10.000), cria a Checkout Session com `ui_mode: "form"` e devolve `client_secret`.
 4. O `stripe.initCheckoutFormSdk` monta o formulário dentro do modal, já no idioma do site.
 5. Depois do pagamento, o Stripe volta para `/?donation=success`, e o site mostra "Thank you!".
-6. Sem servidor (site aberto como arquivo ou hospedado só como estático), o botão abre o `stripeLink` do [js/config.js](js/config.js) como alternativa.
+6. Sem servidor (site aberto como arquivo ou hospedado só como estático), o botão abre o `stripeLink` do [js/config.js](public/js/config.js) como alternativa.
 
 ## Testing
 
@@ -84,7 +84,7 @@ Use qualquer data futura, qualquer CVC e qualquer CEP.
 
 - **Publicar:** o servidor precisa de hospedagem Node. O Netlify Drop não roda o `server.js`. Opções grátis ou baratas: Render.com (Web Service, comando `npm start`) ou Railway. Configure as variáveis do `.env` no painel da hospedagem.
 - **Trocar para as chaves live** (`pk_live_` e `sk_live_`) depois de ativar a conta Stripe.
-- **Atualizar o total arrecadado:** some as doações vistas em https://dashboard.stripe.com/payments e lance o total no `admin.html`. Se quiser automatizar, dá para adicionar um webhook `checkout.session.completed` que atualiza o Firebase sozinho.
+- **Atualizar o total arrecadado:** some as doações vistas em https://dashboard.stripe.com/payments e lance o total no `public/admin.html`. Se quiser automatizar, dá para adicionar um webhook `checkout.session.completed` que atualiza o Firebase sozinho.
 
 ## Resources
 

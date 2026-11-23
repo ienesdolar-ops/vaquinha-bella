@@ -4,13 +4,12 @@ const express = require("express");
 const Stripe = require("stripe");
 
 // SDK 23.x usa a API 2026-11-18.endive (posterior à Dahlia, compatível com ui_mode "form")
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+// Se a chave não estiver configurada, o site abre normalmente e só o pagamento por cartão avisa o erro
+const stripe = process.env.STRIPE_SECRET_KEY ? new Stripe(process.env.STRIPE_SECRET_KEY) : null;
 const app = express();
 
-// Serve apenas os arquivos do site (nunca server.js, .env ou node_modules)
-for (const dir of ["css", "js", "img"]) app.use(`/${dir}`, express.static(path.join(__dirname, dir)));
-app.get(["/", "/index.html"], (req, res) => res.sendFile(path.join(__dirname, "index.html")));
-app.get("/admin.html", (req, res) => res.sendFile(path.join(__dirname, "admin.html")));
+// Arquivos do site ficam em public/ (na Vercel, essa pasta é servida direto pelo CDN)
+app.use(express.static(path.join(__dirname, "public")));
 app.use(express.json());
 
 // Chave publicável para o navegador
@@ -21,6 +20,7 @@ app.get("/api/config", (req, res) => {
 const LOCALES = { pt: "pt-BR", en: "en-GB", es: "es", fr: "fr", it: "it", ar: "auto", zh: "zh", ja: "ja" };
 
 app.post("/api/create-checkout-session", async (req, res) => {
+  if (!stripe) return res.status(503).json({ error: "STRIPE_SECRET_KEY not configured" });
   try {
     // Doação livre em dólar: mínimo US$ 1, máximo US$ 10.000
     const usd = Math.round(Number(req.body?.amount) || 0);
@@ -56,3 +56,4 @@ app.post("/api/create-checkout-session", async (req, res) => {
 
 const port = process.env.PORT || 4242;
 app.listen(port, () => console.log(`Vaquinha rodando em http://localhost:${port}`));
+module.exports = app;

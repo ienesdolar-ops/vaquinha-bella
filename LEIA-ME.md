@@ -1,9 +1,9 @@
 # Vaquinha da Bella: como colocar no ar
 
-Todas as configurações ficam em `js/config.js`.
+Todas as configurações ficam em `public/js/config.js`.
 
 ## 1. Foto
-Salve a foto da Bella como `img/bella.jpg`. Enquanto não houver foto, aparece um "B" dourado.
+Salve a foto da Bella como `public/img/bella.jpg`. Enquanto não houver foto, aparece um "B" dourado.
 
 ## 2. Cartão internacional (Stripe)
 1. Crie uma conta em stripe.com (aceita conta bancária no Brasil).
@@ -19,7 +19,7 @@ Crie o seu paypal.me (paypal.com/paypalme) e coloque o usuário em `paypalUser`.
 Preencha `pix.chave`, `pix.nome` e `pix.cidade`, sem acentos. O QR Code é gerado automaticamente.
 
 ## 5. Atualizar o valor arrecadado (opcional, recomendado)
-Sem o Firebase, o site mostra o valor fixo de `arrecadadoBRL`, que você edita no arquivo. Para atualizar pelo `admin.html`:
+Sem o Firebase, o site mostra o valor fixo de `arrecadadoBRL`, que você edita no arquivo. Para atualizar pelo `public/admin.html`:
 1. Crie um projeto grátis em console.firebase.google.com e adicione um app **Web**.
 2. Copie `apiKey`, `authDomain`, `projectId` e `appId` para `firebase` no `config.js`.
 3. Em **Authentication**, ative "E-mail/senha" e crie o seu usuário.
